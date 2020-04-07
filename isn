@@ -119,7 +119,7 @@ def jeux():
     mn = hud.create_text(310,70,text = "")
 
     nuit = False
-    night = hud.create_text(350,90,text = "nuit")
+    night = hud.create_text(350,90,text = "")
 
     #fonctions HUD
     def hunger():
