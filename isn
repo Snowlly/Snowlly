@@ -114,9 +114,9 @@ def jeux():
     
     hud.create_text(300,90,text="Heure")
     hud.create_rectangle(275,60,325,80,fill="white")
-    hour = hud.create_text(290,70,text = heure)
+    hour = hud.create_text(290,70,text = "")
     hud.create_text(300,69,text = ":")
-    mn = hud.create_text(310,70,text = minute)
+    mn = hud.create_text(310,70,text = "")
 
     nuit = False
     night = hud.create_text(350,90,text = "nuit")
