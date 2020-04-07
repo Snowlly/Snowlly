@@ -1,0 +1,211 @@
+from tkinter import *
+from tkinter.messagebox import *
+
+
+fenetre = Tk()
+fenetre.title('ALLGrimm')
+fenetre.geometry("500x250")
+
+
+
+label = Label(fenetre, text="Bienvenue Dans ALLGrimm !")
+label.pack()
+
+
+
+
+value = StringVar() 
+value.set("Veuillez insérer votre Pseudonyme")
+entree = Entry(fenetre, textvariable=value, width=30)
+entree.pack()
+
+
+bouton1 = Checkbutton(fenetre, fg='green', text="Facile")
+bouton1.pack()
+bouton2 = Checkbutton(fenetre, fg='yellow', text="Moyen")
+bouton2.pack()
+bouton3 = Checkbutton(fenetre, fg='orange', text="Difficile")
+bouton3.pack()
+bouton4 = Checkbutton(fenetre, fg='red', text="HardCore")
+bouton4.pack()
+
+
+
+x = 250
+y = 250
+
+
+
+faim = 10
+froid = 10
+soif = 10
+
+bois = 0
+pierre = 0
+
+heure = 0
+minute = 0
+
+hour = ""
+mn = ""
+night = ""
+
+
+
+
+def jeux():
+    fenetre2 = Toplevel(fenetre)
+    fenetre2.geometry("1920x1080")
+    w = Canvas(fenetre2,width = 500, height = 500)
+
+    
+
+    def deplacement(event):
+        global x, y
+        if event.keysym =='Left':
+            x = x - 100
+            print(x)
+        
+    
+        if event.keysym == 'Right':
+            print(y)
+            x += 100
+        
+        if event.keysym=='Up':
+            y = y - 100
+            
+        if event.keysym=='Down':
+            y = y + 100
+            
+    def move_image():
+        global x, y
+        w.coords(image,x,y)
+        fenetre2.after(100,refresh)
+
+    filename = PhotoImage(file = "image.gif")
+    image = w.create_image(x, y, image = filename)
+
+    #affiche HUD
+    hud = Canvas(fenetre2, width = 500, height = 100,background ="grey")
+
+    
+    hud.create_rectangle(50,faim,58,80,fill = "red")
+    hud.create_text(55,90,text="Faim")
+
+    
+    hud.create_text(105,90,text="Froid")
+    hud.create_rectangle(100,froid,108,80,fill = "blue")
+
+    
+    hud.create_text(155,90,text="Soif")
+    hud.create_rectangle(150,froid,158,80,fill = "green")
+
+    
+    hud.create_text(200,90,text = "Bois")
+    hud.create_rectangle(190,60,210,80,fill="white")
+    hud.create_text(200,70,text = bois)
+
+    
+    hud.create_text(240,90,text = "Pierre")
+    hud.create_rectangle(230,60,250,80,fill="white")
+    hud.create_text(240,70,text=pierre)
+
+    
+    
+    hud.create_text(300,90,text="Heure")
+    hud.create_rectangle(275,60,325,80,fill="white")
+    hour = hud.create_text(290,70,text = heure)
+    hud.create_text(300,69,text = ":")
+    mn = hud.create_text(310,70,text = minute)
+
+    nuit = False
+    night = hud.create_text(350,90,text = "nuit")
+
+    #fonctions HUD
+    def hunger():
+        global faim
+        faim += 0.5
+        hud.create_rectangle(50,faim,58,80,fill = "red")
+    def frost():
+        global froid
+        froid+=0.5
+        hud.create_rectangle(100,froid,108,80,fill = "blue")
+    def thirst():
+        global soif
+        soif+=0.5
+        hud.create_rectangle(150,froid,158,80,fill = "green")
+    def wood():
+        global bois
+        hud.create_text(200,70,text = bois)
+    def stone():
+       global pierre
+       hud.create_text(240,70,text=pierre)
+    def time():
+        global heure, minute, mn, hour
+        minute += 1
+        if minute == 59 :
+            heure += 1
+            minute = 0
+        if heure == 23 and minute == 58:
+            heure = 0
+            minute = 0
+        hud.delete(mn)
+        hud.delete(hour)
+        
+        hour = hud.create_text(290,70,text = heure)
+        mn = hud.create_text(310,70,text = minute)
+        
+    def daytime():
+        global heure,nuit,night
+    
+        if heure <= 6 or heure >= 19:
+            nuit = True
+        else:
+            nuit = False
+        
+        print(nuit)
+        if nuit == True:
+            hud.delete(night)
+            night = hud.create_text(350,90,text = "nuit")
+        if nuit == False:
+            hud.delete(night)
+            night = hud.create_text(350,90,text = "jour")
+
+    
+    w.pack()
+    hud.pack()
+    fenetre2.bind("<KeyPress>",deplacement)
+
+    def refresh():
+        move_image() 
+        hunger()
+        frost()
+        thirst()
+        time()
+        daytime()
+        
+    
+    refresh()
+    fenetre2.mainloop()
+
+bouton = Button(fenetre, text="Commencer l'aventure !", command=jeux)
+bouton.pack()
+
+def fermer():
+    fenetre.destroy()
+
+def callback():
+    if askyesno('Attention !', 'Êtes-vous sûr de vouloir faire ça?'):
+        Button(command=fermer)
+        return
+        
+        
+Button(text='Fermer', fg='red', command=callback).pack()
+
+
+
+
+
+fenetre.mainloop()
+
+
