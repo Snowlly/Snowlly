@@ -29,7 +29,7 @@ bouton3.pack()
 bouton4 = Checkbutton(fenetre, fg='red', text="HardCore")
 bouton4.pack()
 
-
+#VARIABLES FONCTIONS JEUX
 
 x = 250
 y = 250
@@ -48,7 +48,7 @@ minute = 0
 
 hour = ""
 mn = ""
-night = ""
+night = "nuit"
 
 
 
@@ -62,19 +62,19 @@ def jeux():
 
     def deplacement(event):
         global x, y
-        if event.keysym =='Left':
+        if event.keysym =='q':
             x = x - 100
             print(x)
         
     
-        if event.keysym == 'Right':
+        if event.keysym == 'd':
             print(y)
             x += 100
         
-        if event.keysym=='Up':
+        if event.keysym=='z':
             y = y - 100
             
-        if event.keysym=='Down':
+        if event.keysym=='s':
             y = y + 100
             
     def move_image():
@@ -124,22 +124,27 @@ def jeux():
     #fonctions HUD
     def hunger():
         global faim
-        faim += 0.5
+        faim += 0.005
         hud.create_rectangle(50,faim,58,80,fill = "red")
+        
     def frost():
         global froid
-        froid+=0.5
+        froid+=0.005
         hud.create_rectangle(100,froid,108,80,fill = "blue")
+        
     def thirst():
         global soif
-        soif+=0.5
+        soif+=0.005
         hud.create_rectangle(150,froid,158,80,fill = "green")
+        
     def wood():
         global bois
         hud.create_text(200,70,text = bois)
+        
     def stone():
        global pierre
        hud.create_text(240,70,text=pierre)
+       
     def time():
         global heure, minute, mn, hour
         minute += 1
