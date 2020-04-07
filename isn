@@ -143,27 +143,27 @@ def jeux():
         
     def stone():
        global pierre
-       hud.create_text(240,70,text=pierre)
+       hud.create_text(240,70,text = pierre)
        
     def time():
         global heure, minute, mn, hour
-        minute += 1
-        if minute == 59 :
+        minute += 0.2
+        if minute > 60 :
             heure += 1
             minute = 0
-        if heure == 23 and minute == 58:
+        if heure == 24 and minute == 00:
             heure = 0
             minute = 0
         hud.delete(mn)
         hud.delete(hour)
         
         hour = hud.create_text(290,70,text = heure)
-        mn = hud.create_text(310,70,text = minute)
+        mn = hud.create_text(310,70,text = int(minute))
         
     def daytime():
         global heure,nuit,night
     
-        if heure <= 6 or heure >= 19:
+        if heure <= 7 or heure >= 19:
             nuit = True
         else:
             nuit = False
@@ -212,5 +212,3 @@ Button(text='Fermer', fg='red', command=callback).pack()
 
 
 fenetre.mainloop()
-
-
